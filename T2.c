@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_LINE_SIZE 50
+#define MAX_REGISTERS 1000
 
 typedef struct
 {
@@ -11,6 +13,14 @@ typedef struct
     char gender;
     double salary;
 } Register;
+
+typedef union{
+    int id;
+    char login[15];
+    char password[30];
+    char gender;
+    double salary;
+} KeyValue;
 
 void readRegister(FILE *base, Register *list)
 {
@@ -96,6 +106,93 @@ int openNreadFile(Register *list)
     return nRegisters;
 }
 
+int searchFor(int keyCode, KeyValue value, Register *list){
+    int index = -1;
+    switch (keyCode)
+    {
+    case 1:{
+        for(int i = 0; i < MAX_REGISTERS; i++){
+            if(list[i].id == value.id){
+                index = i;
+            }
+        }
+        break;
+    }
+    case 2:{
+        for(int i = 0; i < MAX_REGISTERS; i++){
+            if(strcmp(list[i].login, value.login) == 0){
+                index = i;
+            }
+        }
+        break;
+    }
+    case 3:{
+        for(int i = 0; i < MAX_REGISTERS; i++){
+            if(strcmp(list[i].password, value.password) == 0){
+                index = i;
+            }
+        }
+        break;
+    }
+    case 4:{
+        for(int i = 0; i < MAX_REGISTERS; i++){
+            if(list[i].gender == value.gender){
+                index = i;
+            }
+        }
+        break;
+    }
+    case 5:{
+        for(int i = 0; i < MAX_REGISTERS; i++){
+            if(list[i].salary == value.salary){
+                index = i;
+            }
+        }
+        break;
+    }
+    }
+
+    return index;
+}
+
+int interpreteDataLine(char command[100], Register *list){
+    char key[9];
+    KeyValue keyValue;
+    int rgstIndex;
+    sscanf(command, "%*d \"%[^\"]\"", key);
+
+    //Interpreta a chave e armazena o valor procurado
+    if (strcmp(key, "id") == 0)
+    {
+        sscanf(command, "%*d \"%*[^\"]\" %d", &keyValue.id);
+        rgstIndex = searchFor(1, keyValue, list);
+    }
+    else if (strcmp(key, "login") == 0)
+    {
+        sscanf(command, "%*d \"%*[^\"]\" %s", keyValue.login);
+        rgstIndex = searchFor(2, keyValue, list);
+    }
+    else if (strcmp(key, "password") == 0)
+    {
+        sscanf(command, "%*d \"%*[^\"]\" %s", keyValue.password);
+        rgstIndex = searchFor(3, keyValue, list);
+    }
+    else if (strcmp(key, "gender") == 0)
+    {
+        sscanf(command, "%*d \"%*[^\"]\" %c", &keyValue.gender);
+        rgstIndex = searchFor(4, keyValue, list);
+    }
+    else if (strcmp(key, "salary") == 0)
+    {
+        sscanf(command, "%*d \"%*[^\"]\" %lf", &keyValue.salary);
+        rgstIndex = searchFor(5, keyValue, list);
+    }
+
+    return rgstIndex;
+}
+
+
+
 int main()
 {
     Register *regList = (Register *)calloc(1000, sizeof(Register));
@@ -105,7 +202,7 @@ int main()
     int possibleInserts = 1000 - regsInFile;
 
     // 1-- Ler o numero de registros em um arquivo || FEITO
-    // 2-- Implementar a busca de registros
+    // 2-- Implementar a busca de registros || FEITO
     // 3-- Implementar a deleção de registros
     // 4-- Implementar a inserção de registros
 
@@ -123,19 +220,30 @@ int main()
             }
             printf("Sem espaço para inserção.");
             break;
-        case '2':
-            // Implementar a função de busca
-            printf("Query");
+        case '2':{
+            int i = interpreteDataLine(line, regList);
+            if(i != -1){
+                printf("{\n");
+                printf("    \"id\": %d,\n",regList[i].id);
+                printf("    \"login\": \"%s\",\n",regList[i].login);
+                printf("    \"password\": \"%s\",\n",regList[i].password);
+                printf("    \"gender\": \"%c\",\n",regList[i].gender);
+                printf("    \"salary\": %.2lf\n",regList[i].salary);
+                printf("}\n");   
+            }
+            else{
+                printf("Nada encontrado.\n");
+            }
             break;
+        }
         case '3':
         {
-            char key[9];
-            sscanf(line, "%*d \"%[^\"]\"", key);
-            if (strcmp(key, "id") == 0)
-            {
-                int id;
-                sscanf(line, "%*d \"%*[^\"]\" %d", &id);
-                // Chamar a busca pelo Id
+            int i = interpreteDataLine(line, regList);
+            if(i != -1){
+                //Terminar essa implementação
+            }
+            else{
+                printf("Remoção inválida\n");
             }
             break;
         }
