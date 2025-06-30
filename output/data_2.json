@@ -1,0 +1,23 @@
+[
+    {
+        "login": "joaosilva",
+        "password": "senha1234567890",
+        "gender": "M",
+        "salary": 3500.75,
+        "id": 1
+    },
+    {
+        "password": "segura12345678",
+        "login": "mariarodr",
+        "gender": "F",
+        "salary": 4200.00,
+        "id": 2
+    },
+    {
+        "gender": "M",
+        "login": "lucas_fern",
+        "password": "lucaspass123456",
+        "salary": 5100.25,
+        "id": 3
+    }
+]

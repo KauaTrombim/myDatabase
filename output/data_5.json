@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "password": "senha1234567890",
+        "gender": "M",
+        "login": "joaosilva",
+        "salary": 3500.75
+    },
+    {
+        "login": "mariarodr",
+        "id": 2,
+        "password": "segura12345678",
+        "gender": "F",
+        "salary": 4200.00
+    },
+    {
+        "id": 3,
+        "login": "lucas_fern",
+        "gender": "M",
+        "password": "lucaspass123456",
+        "salary": 5100.25
+    },
+    {
+        "id": 4,
+        "login": "ana_paula",
+        "password": "anap12345678",
+        "gender": "F",
+        "salary": 3900.50
+    },
+    {
+        "id": 5,
+        "login": "carlos.souza",
+        "password": "car123senha",
+        "gender": "M",
+        "salary": 4600.00
+    },
+    {
+        "id": 6,
+        "login": "beatriz.m",
+        "password": "beasenha99",
+        "gender": "F",
+        "salary": 4800.20
+    },
+    {
+        "id": 7,
+        "login": "ricardo123",
+        "password": "ricardo7890",
+        "gender": "M",
+        "salary": 5200.00
+    },
+    {
+        "id": 8,
+        "login": "juliana.k",
+        "password": "juli2024senha",
+        "gender": "F",
+        "salary": 4550.75
+    },
+    {
+        "id": 9,
+        "login": "fernando_g",
+        "password": "fernpass345",
+        "gender": "M",
+        "salary": 5000.00
+    },
+    {
+        "id": 10,
+        "login": "larissa.l",
+        "password": "larissenha88",
+        "gender": "F",
+        "salary": 4700.10
+    }
+]
